@@ -1,0 +1,68 @@
+.content {
+  min-height: calc(100vh - 193px);
+  padding-bottom: inherit;
+}
+
+.footer {
+  background-color: #399cff;
+}
+
+svg path{
+	animation:pathAnim 4s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+svg path:nth-child(2){
+   animation-duration: 5s;
+}
+
+svg path:nth-child(3){
+	animation-duration: 6s;
+}
+
+svg path:nth-child(4){
+	animation-duration: 7s;
+}
+
+@keyframes pathAnim{
+	0%{
+		d: path("M0,27c347-50,408-16,660-12c222,22,423,44,660,12v58H0");
+	}
+	25%{
+		d: path("M0,2.8c224-17,440,50,662,29c205-7,259-40,658-29v58H0");
+	}
+	50%{
+		d: path("M0,20.5c220,48,432,26,639-2c257-25,407-25,681,2v58H0");
+	}
+	75%{
+		d: path("M0,31.7c220,50,406-34,649.6-31.7C881,0.7,1100,81.7,1320,31.7v58H0");
+	}
+	100%{
+		d: path("M0,27c347-50,408-16,660-12c222,22,423,44,660,12v58H0");
+	}
+}
+
+@media (max-width:1300px){
+	.footer{
+     min-height:calc(5vw + 5px);
+	}
+}
+
+@media (max-width:800px){
+	.footer{
+     min-height:calc(5vw + 20px);
+	}
+}
+
+@media (max-width:670px){
+	.footer{
+     min-height:calc(5vw + 35px);
+	}
+}
+
+@media (max-width:500px){
+	.footer{
+     min-height:calc(5vw + 50px);
+	}
+}

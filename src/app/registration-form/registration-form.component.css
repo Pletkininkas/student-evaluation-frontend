@@ -1,0 +1,31 @@
+.ng-dirty:not(form).ng-invalid:not(.form) {
+  border: 2px solid red;
+}
+
+.ng-valid:not(form).ng-valid:not(.form) {
+  border: 2px solid green;
+}
+
+.input-group-text {
+  box-sizing: content-box;
+  width: 5em;
+  justify-content: center;
+  font-weight: 600;
+}
+
+
+.black-border {
+  border: 1px solid black;
+  padding: 2%;
+  max-width: 600px;
+  float: none; margin: 0 auto;
+  height: 101%;
+}
+.container{
+  margin-top: 100px;
+}
+
+.text-muted{
+  font-size: 0.75em;
+  font-style: oblique;
+}

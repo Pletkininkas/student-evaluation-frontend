@@ -1,0 +1,170 @@
+<div id="student-details" class="container-fluid" *ngIf="student$ | async as student">
+	<div class="row d-flex">
+		<div class="col-md-4 text-center">
+      <div>
+        <img class="img" [src]="getStudentImage(student)" alt="student profile picture "/>
+      </div>
+      <div>
+        <h5 class="text-center">{{ student.name }} {{ student.lastname }}</h5>
+        <div class="align-middle text-center" style="margin-bottom: 5px;">
+          <fa-icon class="eval" title="Evaluate" [icon]="faClipboard" size="2x" (click)="evaluateStudent(student.id)"></fa-icon>
+          <fa-icon class="edit" title="Edit" [icon]="faEdit" size="2x" [routerLink]="['/edit', student.id]" *ngIf="isAdmin()"></fa-icon>
+          <fa-icon class="delete" title="Delete" [icon]="faTrashAlt" size="2x" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="student.id" *ngIf="isAdmin()"></fa-icon>
+        </div>
+      </div>
+		</div>
+		<div class="col-md-4">
+      <div class="container" style=" border-radius: 20px; overflow: hidden ;">
+        <div class="row"   *ngIf="student.university" >
+          <div class="col-4 infoH" style=" border-right: 0.5px solid #d0d7df; vertical-align: middle">University</div>
+          <div class="col-8 info"><p style="word-wrap:break-word;">{{ student.university }}</p></div>
+        </div>
+        <div class="row" *ngIf="student.comment">
+          <div class="col-4  align-middle   infoH"  style="display:block; border-top: 0.5px solid #d0d7df; border-right: 0.5px solid #d0d7df;  ">    Previous experience</div>
+          <div class="col-8  info"  style="border-top:  0.5px solid #d0d7df; "><p style="word-wrap:break-word;">{{ student.comment }}</p></div>
+        </div>
+      </div>
+		</div>
+		<div class="col-auto">
+      <table class="table table-striped table-responsive average-table">
+        <thead class="thead-dark">
+          <tr>
+            <th colspan="4" style="padding-bottom: 0;">
+              <p class="text-center value" style="margin-bottom: 0px; width: 275px;">Average</p>
+            </th>
+          </tr>
+          <tr>
+            <th scope="col" style="padding-bottom: 0;">
+              <p class="text-center value">FE</p>
+            </th>
+            <th scope="col" style="padding-bottom: 0;">
+              <p class="text-center value">BE</p>
+            </th>
+            <th scope="col" style="padding-bottom: 0;">
+              <p class="text-center value">QA</p>
+            </th>
+            <th scope="col" style="padding-bottom: 0;">
+              <p class="text-center value">Project</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.fe != 0">
+                {{student.averageEvaluationDetails.streamOverall.fe}}</p>
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.fe == 0">-</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.be != 0">
+                {{student.averageEvaluationDetails.streamOverall.be}}</p>
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.be == 0">-</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.qa != 0">
+                {{student.averageEvaluationDetails.streamOverall.qa}}</p>
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.qa == 0">-</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.project != 0">
+                {{student.averageEvaluationDetails.streamOverall.project}}</p>
+              <p class="text-center value" *ngIf="student.averageEvaluationDetails.streamOverall.project == 0">-</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+		</div>
+	</div>
+  <div class="row" style="margin-bottom: -20px;">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4 exportbtn" style="padding-bottom: 0;">
+      <h5 class="text-center">Current evaluations</h5>
+    </div>
+    <div class="col-md-4 text-right">
+      <button type="button" class="btn btn-evaluate" title="Export student details" (click)="exportCard(student)">Export</button>
+    </div>
+  </div>
+	<div class="row">
+		<div class="col-md-12">
+      <table class="table table-striped table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">
+              <p class="text-center value">Tutor's name</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Evaluated stream</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Overall evaluation</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Direction</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Communication</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Ability to learn</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Comment</p>
+            </th>
+            <th scope="col">
+              <p class="text-center value">Delete evaluation</p>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="evaluationList$ | async as evaluationList">
+          <tr *ngIf="evaluationList?.length == 0 || evaluationList == null">
+            <th class="no-evaluations" rowspan="1" colspan="9">
+              <div>
+                <fa-icon class="fa-3x" [icon]="faAddressCard"></fa-icon>
+              </div>
+              <div>
+                Student does not have any evaluations!
+              </div>
+            </th>
+          </tr>
+          <tr *ngFor="let evaluation of evaluationList">
+            <td class="align-middle">
+              <p class="text-center value">{{evaluation.userUsername}}</p>
+              <p class="text-center value"><i>{{evaluation.userStream}}</i></p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value">{{evaluation.stream}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value">{{evaluation.evaluation}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value">{{directionOptions[evaluation.direction].name}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="evaluation.communication != undefined">
+                {{communicationOptions[evaluation.communication].name}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value" *ngIf="evaluation.learnAbility != undefined">
+                {{abilityToLearnOptions[evaluation.learnAbility].name}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value">{{evaluation.comment}}</p>
+            </td>
+            <td class="align-middle text-center">
+              <div *ngIf="!evaluation.active">
+                <fa-icon class="delete-disabled" title="Disabled" [icon]="faTrashAlt" size="2x" *ngIf="(isEvaluationDeletable(evaluation))" [style.opacity]="0.2"></fa-icon>
+              </div>
+              <div *ngIf="evaluation.active">
+                <fa-icon class="delete" title="Delete" [icon]="faTrashAlt" size="2x" *ngIf="(isEvaluationDeletable(evaluation))" [style.opacity]="1" (click)="deleteEvaluation(evaluation)"></fa-icon>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-deletion-modal [id]="studentId" (closeModal)="deleteStudent($event)" #deleteConfirmationModal>
+      </app-deletion-modal>
+		</div>
+	</div>
+</div>

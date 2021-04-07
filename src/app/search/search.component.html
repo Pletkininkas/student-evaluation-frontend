@@ -1,0 +1,14 @@
+<input type="text" class="form-control" maxlength="512" placeholder="Search..." [formControl]="inputForm" style="width: inherit;"/>
+<div class="autocomplete row justify-content-center" *ngIf="resultStudentList$ | async as resultStudentList">
+  <div>
+    <ul>
+      <li *ngFor="let student of resultStudentList" (click)="openStudent()" [routerLink]="['/student', student?.id]">
+        <img [src]='getStudentImage(student)'>
+        <span class="truncate" [innerHTML]="getStudentName(student)"></span>
+      </li>
+    </ul>
+    <ul *ngIf="resultStudentList.length === 0">
+      <li>No results found.</li>
+    </ul>
+  </div>
+</div>

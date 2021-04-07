@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row ">
+        <div class="col-md-12">
+
+            <div class="form-group">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="black-border">
+                    <h2 class="text-center">Login</h2>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">E-mail</div>
+                            </div>
+                            <input class="form-control" id="email" type="email" formControlName="email" />
+                        </div>
+
+                        <div style="visibility: {{!email.errors?.pattern ? 'hidden': 'visible'}};" class="text-muted">
+                            Please check e-mail address format!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">Password</div>
+                            </div>
+                            <input class="form-control" id="password" type="password" formControlName="password" />
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <a routerLink="/login" class="forgot-password">Forgotten password?</a>
+                        <br>
+                        <a routerLink="/register">Register</a>
+                        <div class="float-right ">
+                            <button [disabled]="!loginForm.valid" class="btn btn-primary "
+                                aria-label="Vertical button group">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

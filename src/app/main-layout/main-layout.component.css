@@ -1,0 +1,103 @@
+.circle{
+  position: absolute;
+  display: flex;
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+  box-shadow: 0px 0px 1px 0px #508fb9;
+  z-index: -100;
+}
+
+img{
+  position: absolute;
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(127deg) brightness(103%) contrast(103%);
+  left: 35px;
+  top: 65px;
+}
+
+.small {
+  background: #3399ff;
+  width: 140px;
+  height: 140px;
+  left: -30px;
+  top: -60px;
+}
+
+.medium {
+  background: #60afff;
+  width: 110px;
+  height: 110px;
+  left: -40px;
+  top: -20px;
+  animation: ripple 14s infinite;
+}
+
+.large {
+  background: #96cbff;
+  width: 130px;
+  height: 130px;
+  left:-5px;
+  top: -45px;
+  animation: ripple 15s infinite;
+}
+
+.xlarge {
+  background: #a1cefc;
+  width: 140px;
+  height: 140px;
+  left: -25px;
+  top: -35px;
+  animation: ripple 16s infinite;
+}
+
+.xxlarge {background: #ffffff;
+  width: 180px;
+  height: 180px;
+  left: -35px;
+  top: -45px;
+  animation: ripple 17s infinite;
+}
+
+.shade1 {
+  opacity: 0.2;
+}
+
+.shade2 {
+  opacity: 0.5;
+}
+
+.shade3 {
+  opacity: 0.7;
+}
+
+.shade4 {
+  opacity: 0.8;
+}
+
+.shade5 {
+  opacity: 0.9;
+}
+
+@keyframes ripple {
+  0%{
+
+    transform: scale(1);
+  }
+
+  50%{
+    transform: scale(1.2);
+  }
+
+  100%{
+    transform: scale(1);
+  }
+}
+
+@media all and (min-width: 0px) and (max-width: 1350px) {
+  .circle{
+    display: none;
+  }
+}
+
+.content {
+  min-height: calc(100vh - 140px);
+}

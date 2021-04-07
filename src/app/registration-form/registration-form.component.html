@@ -1,0 +1,76 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <!--Form  -->
+
+      <form [formGroup]="registrationForm" (submit)="submitForm()" class="black-border">
+        <h2 class="text-center">Register</h2>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Username</div>
+            </div>
+            <input class="form-control" id="username" type="text" formControlName="username" />
+          </div>
+          <div class="text-muted" style="visibility: {{!username.errors?.minlength ? 'hidden': 'visible'}};"
+            [hidden]="username.errors?.maxlength">Username should be atleast 5 characters long!</div>
+          <div class="text-muted" [hidden]="!username.errors?.maxlength">Username should not be longer than 40 characters!</div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">E-mail</div>
+            </div>
+            <input class="form-control" id="email" type="email" formControlName="email" />
+          </div>
+          <div style="visibility: {{!email.errors?.pattern ? 'hidden': 'visible'}};" class="text-muted">
+            Please check e-mail address format!
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Password</div>
+            </div>
+            <input class="form-control" id="password" type="password" formControlName="password" />
+          </div>
+          <div [hidden]="password.errors?.maxlength"
+            style="visibility: {{!password.errors?.pattern ? 'hidden': 'visible'}};" class="text-muted">
+            Password should be at least 8 characters long and contain at least
+            one digit!
+          </div>
+          <div [hidden]="!password.errors?.maxlength" class="text-muted">
+            Password should not be longer than 50 characters!
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">Stream</div>
+            </div>
+            <select formControlName="stream" class="form-control drop-down">
+              <option default value="">Select</option>
+              <option *ngFor="let option of streamOptions">
+                {{ option }}
+              </option>
+            </select>
+          </div>
+          <div [hidden]="stream.valid || stream.pristine">
+          <div style="visibility: {{!stream.errors?.required ? 'hidden': 'visible'}};" class="text-muted">
+            Please choose stream option!
+          </div>
+        </div>
+        </div>
+        <div class="form-group" style="margin-top: 10px;"><a routerLink="/logn">Back to login</a>
+          <div class="float-right">
+            <button class="btn btn-primary" [disabled]="!registrationForm.valid">
+              Register
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- End Form -->
+    </div>
+  </div>
+</div>

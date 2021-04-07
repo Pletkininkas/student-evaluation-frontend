@@ -1,0 +1,60 @@
+<div class="container text-shrink">
+  <div class="row justify-content-center">
+    <h2 class="text-center" style="margin-bottom: 20px;">My evaluations</h2>
+    <div class="col-auto">
+      <table class="table table-striped table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col" class="header-element unselectable" *ngFor="let name of evaluationTableHeaderNames">{{name}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="userEvaluations?.length == 0 || userEvaluations == null">
+            <th class="no-evaluations" rowspan="1" colspan="9">
+              <div>
+                <fa-icon class="fa-3x" [icon]="faAddressCard"></fa-icon>
+              </div>
+              <div>
+                You have not yet evaluated any student!
+              </div>
+            </th>
+          </tr>
+          <tr *ngFor="let evaluation of userEvaluations; let j = index">
+            <th class="align-middle text-center">
+              <img class="test" [src]="getStudentImage(evaluation.student)"
+                [routerLink]="['/student', evaluation.student.id]" />
+            </th>
+
+            <td class="align-middle student-name" style ="word-break:normal;">
+              <a class="text-left" [routerLink]="['/student', evaluation.student.id]">
+                  <div>{{evaluation.student.name}}</div>
+                  <div>{{evaluation.student.lastname}}</div>
+              </a>
+            </td>
+            <td class="align-middle"><p class="text-center value">{{evaluation.evaluation.stream}}</p></td>
+            <td class="align-middle"><p class="text-center value">{{evaluation.evaluation.evaluation}}</p></td>
+            <td class="align-middle"><p class="text-center value">{{directionOptions[evaluation.evaluation.direction].name}}</p></td>
+            <td class="align-middle"><p class="text-center value" *ngIf="evaluation.evaluation.communication != undefined">{{communicationOptions[evaluation.evaluation.communication].name}}</p></td>
+            <td class="align-middle"><p class="text-center value" *ngIf="evaluation.evaluation.learnAbility != undefined">{{abilityToLearnOptions[evaluation.evaluation.learnAbility].name || ''}}</p></td>
+            <td class="align-middle"><p class="text-center value">{{evaluation.evaluation.comment}}</p></td>
+            <td class="align-middle text-center">
+              <div class="icons">
+                <div *ngIf="!evaluation.evaluation.active" title="Disabled">
+                  <fa-icon class="edit" [icon]="faEdit" size="2x" [style.opacity]="0.2"></fa-icon>
+                  <fa-icon class="delete" [icon]="faTrashAlt" size="2x" data-toggle="modal" [style.opacity]="0.2"></fa-icon>
+                </div>
+                <div *ngIf="evaluation.evaluation.active">
+                  <fa-icon class="edit" title="Edit" [icon]="faEdit" size="2x" (click)="editEvaluation(evaluation.evaluation.id, evaluation.student.id)"></fa-icon>
+                  <fa-icon class="delete" title="Delete" [icon]="faTrashAlt" size="2x" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="selectEvaluation(evaluation.evaluation.id)"></fa-icon>
+                </div>
+              </div>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-deletion-modal [id]="selectedEvaluationId" (closeModal)="deleteEvaluation($event)" #deleteConfirmationModal>
+      </app-deletion-modal>
+    </div>
+  </div>
+</div>

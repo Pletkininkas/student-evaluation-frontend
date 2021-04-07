@@ -1,0 +1,109 @@
+<div class="container text-shrink">
+  <div class="row">
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+    <div class="col-xs-8 col-sm-12 col-md-12 col-lg-8">
+      <h2 class="text-center">Students list</h2>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Search</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Student name and/or surname"
+          aria-describedby="basic-addon1" #search (keyup)="filterStudents(search.value)" />
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      
+      <table class="table table-striped table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th class="picture unselectable" rowspan="2">Picture
+            </th>
+            <th class="student unselectable text-left" rowspan="2" style="width: 170px;">Student
+            </th>
+            <th class="average" colspan="4">
+              <div>
+                <p class="text-center value unselectable">Average</p>
+              </div>
+            </th>
+            <th class="actions unselectable" rowspan="2">Actions
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let evH of evaluationHeaders"
+                [appSort]="studentsList"
+                [appSortKey]="evH.key"
+                (appSortKeyEmit)="handleSortKey($event)"
+                scope="col"
+                data-order="-1"
+              [attr.data-name]="evH.evaluationKey">
+               <a>
+                <p class="text-center value unselectable">
+                  {{evH.name}}
+                   <fa-icon class="arrow" [icon]="
+                             sortKey === evH.key + '-' + 'asc' ? faSortUp :
+                              sortKey === evH.key + '-' + 'desc' ? faSortDown :
+                              faSort"
+                            size="1x"></fa-icon>
+                </p>
+              </a>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="studentsList?.length == 0 || studentsList == null">
+            <th class="no-students" rowspan="1" colspan="9">
+              <div>
+                <fa-icon class="fa-3x" [icon]="faAddressCard"></fa-icon>
+              </div>
+              <div>
+                There are no students in the list at the moment!
+              </div>
+            </th>
+          </tr>
+          <tr *ngFor="let student of studentsList; let j = index">
+            <th class="image-scale">
+              <img [src]="getStudentImage(student)" [alt]="getImageTitle(student)"
+                [routerLink]="['/student', student.id]" />
+            </th>
+            <td class="align-middle" style="word-break: normal; width: 170px;" >
+              <a class="student-name text-left truncate" [routerLink]="['/student', student.id]">
+                  <div>{{ student.name }}</div>
+                  <div>{{ student.lastname }}</div>
+              </a>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value evaluation">
+                {{student.averageEvaluationDetails.streamOverall.fe ? student.averageEvaluationDetails.streamOverall.fe
+                : '-'}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value evaluation">
+                {{student.averageEvaluationDetails.streamOverall.be ? student.averageEvaluationDetails.streamOverall.be
+                : '-'}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value evaluation">
+                {{student.averageEvaluationDetails.streamOverall.qa ? student.averageEvaluationDetails.streamOverall.qa
+                : '-'}}</p>
+            </td>
+            <td class="align-middle">
+              <p class="text-center value evaluation">
+                {{student.averageEvaluationDetails.streamOverall.project ?
+                student.averageEvaluationDetails.streamOverall.project : '-'}}</p>
+            </td>
+            <td class="align-middle text-center">
+              <fa-icon class="eval" title="Evaluate" [icon]="faClipboard" size="2x" (click)="evaluateStudent(student.id)"></fa-icon>
+              <fa-icon class="edit" title="Edit" [icon]="faEdit" size="2x" [routerLink]="['/edit', student.id]" *ngIf="isAdmin()"></fa-icon>
+              <fa-icon class="delete" title="Delete" [icon]="faTrashAlt" size="2x" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="selectStudent(student.id)" *ngIf="isAdmin()"></fa-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <app-deletion-modal [id]="selectedStudentId" (closeModal)="deleteStudent($event)" #deleteConfirmationModal>
+      </app-deletion-modal>
+    </div>
+  </div>
+</div>

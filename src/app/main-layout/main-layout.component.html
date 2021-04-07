@@ -1,0 +1,23 @@
+<div class="circle xxlarge shade1"></div>
+<div class="circle xlarge shade2"></div>
+<div class="circle large shade3"></div>
+<div class="circle medium shade4"></div>
+<div class="circle small shade5">
+  <img
+    src="/assets/logo.svg"
+    width="80"
+    height="60"
+    class="d-inline-block align-top"
+    color="white"
+  />
+</div>
+
+<div class="container">
+  <app-navbar [menuItems]="menuItems"></app-navbar>
+</div>
+
+<div class="content">
+  <div class="container">
+    <router-outlet> </router-outlet>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+fa-icon {
+  color: #212529;
+}
+
+.eval {
+  margin: 5px;
+}
+
+.eval:hover{
+  color: green;
+  cursor: pointer;
+}
+
+.edit{
+  padding-right: 2px;
+  margin: 5px;
+}
+
+.edit:hover{
+  color: #389cff;
+  cursor: pointer;
+}
+
+.delete:hover{
+  color: red;
+  cursor: pointer;
+}
+
+.img {
+  width:175px;
+  height:175px;
+  border-radius: 25%;
+  object-fit:cover;
+  object-position:50% 50%;
+}
+
+.col-md-4 {
+  padding-bottom: 25px;
+}
+
+.no-evaluations {
+  text-align: center;
+  padding: 5%;
+  width: 1080px;
+}
+
+@media screen and (max-width: 768px) {
+  .exportbtn {
+    padding-bottom: 0;
+    margin-bottom: -50px;
+    margin-right: 15px;
+    margin-top: 4px;
+    padding-left: 0px;
+    text-align: left;
+  }
+}
+
+.infoH{
+  background-color: #f2f2f2 ;color:black;
+  border-color: blue;
+  font-weight: bold;
+  width: 80px;
+}
+
+.info{
+
+  background-color:#ffffff ;
+  color:black;
+}
+
+@media screen and (max-width: 768px) {
+  .average-table {
+    margin-left: 2.5%;
+  }
+}
+
+.truncate {
+  white-space: unset;
+  overflow: hidden;
+  text-overflow: initial;
+}

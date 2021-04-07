@@ -1,0 +1,45 @@
+{
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "types": {
+              "String": {
+                "message": "Use string instead",
+                "fixWith": "string"
+              },
+              "Object": {
+                "message": "Use object instead",
+                "fixWith": "object"
+              },
+              "Boolean": {
+                "message": "Use boolean instead",
+                "fixWith": "boolean"
+              },
+              "{}": {
+                "message": "Use object instead",
+                "fixWith": "object"
+              }
+            }
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": [
+          "warn"
+        ],
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        "quotes": ["error", "single", { "allowTemplateLiterals": true, "avoidEscape": true }],
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0 }]
+      }
+    }
+  ]
+}

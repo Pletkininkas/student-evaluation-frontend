@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 justify-content-center">
+      <!-- Form -->
+      <form [formGroup]="studentForm">
+        <h2 class="text-center" *ngIf="!editMode">Add new student</h2>
+        <h2 class="text-center" *ngIf="editMode">Edit the student</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <br>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" for="name">Name*</div>
+                </div>
+                <input class="form-control" id="name" type="text" formControlName="name" />
+              </div>
+               <div
+              style="visibility: {{!name.errors?.pattern ? 'hidden': 'visible'}};"
+              [hidden]="(name.errors?.required && name?.touched)"
+              class="text-muted">
+               Name should only contain letters.
+              </div>
+              <div class="text-muted"   [hidden]="!(name.errors?.required && name?.touched)"    >Name is required </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" for="lastname">Lastname*</div>
+                </div>
+                <input class="form-control" id="lastname" type="text" formControlName="lastname" />
+              </div>
+              <div style="visibility: {{!lastname.errors?.pattern ? 'hidden': 'visible'}};"
+              [hidden]="(lastname.errors?.required && lastname?.touched)"
+              class="text-muted">
+                Last name should only contain letters.
+              </div>
+              <div class="text-muted"   [hidden]="!(lastname.errors?.required && lastname?.touched)"    >Lastname is required </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" for="university">University</div>
+                </div>
+                <input class="form-control no-border" id="university" type="text" formControlName="university"
+                  placeholder="Optional" />
+              </div>
+            </div>
+            <div class="form-group text-center">
+              <p for="comment" style="width: 145px; text-align: left;">Previous experience</p>
+              <textarea class="form-control no-border" id="comment" rows="3" formControlName="comment"
+                placeholder="Optional" maxlength="250"></textarea>
+            </div>
+            <div *ngIf="comment.errors?.maxlength">Maximum length exceded.</div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" for="file">Photo</div>
+                </div>
+                <input formControlName="file" id="file" type="file" class="form-control no-border" accept="image/*"
+                  (change)="onFileChange($event)" #inputFile>
+              </div>
+              <div class="text-muted" *ngIf="file.errors?.extension">Invalid photo format, only png, jpg, jpeg is
+                allowed.
+              </div>
+              <div class="text-muted" *ngIf="file.errors?.fileSize">Invalid photo size, max size 500kb.</div>
+            </div>
+            <div class="form-group">
+              <div class="borderbox">
+                <img class="boxImg" [src]="imageSrc" />
+              </div>
+              <button class="borderbox boxImg" style="visibility: {{imageSrc != '/assets/imgnotfound.png'  ? 'visible': 'hidden'}};"
+                class="btn btn-outline-secondary" style="margin-top: 5px;" (click)="clearPhoto()">Remove Photo</button>
+              <p>*Mandatory fields</p>
+            </div>
+            <div class="form-group">
+              <a class="align-middle" [routerLink]="['/students']" >
+                Students list</a>
+              <div class="float-right">
+                <button class="btn btn-danger" *ngIf="editMode" data-toggle="modal" data-target="#deleteConfirmationModal" (click)="studentId">Delete</button>
+                <button class="btn btn-primary" [disabled]="!studentForm.valid"
+                  (click)="editMode ?  updateStudent() :  submitForm() ">{{editMode ? 'Update' :'Add'}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- End Form -->
+      <app-deletion-modal (closeModal)="deleteStudent()" #deleteConfirmationModal>
+      </app-deletion-modal>
+    </div>
+  </div>
+</div>
